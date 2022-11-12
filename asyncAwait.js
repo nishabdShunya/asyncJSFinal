@@ -1,22 +1,16 @@
-/* Just as YouTuber does: Async-Await & Promises.all */
+/* Just as YouTuber does: Async-Await & Error Handling */
 console.log('person1: shows ticket');
 console.log('person2: shows ticket');
 
 const preMovie = async () => {
-    const promiseWifeBringingTicks = new Promise((resolve, reject) => { setTimeout(() => { resolve('ticket'); }, 3000); });
-
-    const getPopcorn = new Promise((resolve, reject) => { resolve('popcorn'); });
-
-    const getCandy = new Promise((resolve, reject) => { resolve('candy'); });
-
-    const getCoke = new Promise((resolve, reject) => { resolve('coke') });
-
-    let ticket = await promiseWifeBringingTicks;
-
-    let [popcorn, candy, coke] = await Promise.all([getPopcorn, getCandy, getCoke]);
-    
-    console.log(`${popcorn}, ${candy}, ${coke}`);
-
+    const promiseWifeBringingTicks = new Promise((resolve, reject) => { setTimeout(() => { reject('ticket'); }, 3000); });
+    let ticket;
+    try {
+        ticket = await promiseWifeBringingTicks;
+    }
+    catch (err) {
+        ticket = 'sad face'
+    }
     return ticket;
 };
 
