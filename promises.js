@@ -1,6 +1,6 @@
-/* Additional Sharpener Task One
-Create a new function called delete post which uses promises and deletes in 1 second (processing time - mimic it with setimeout). Everytime you call it, it should delete the last element of the array.
-Continue deleting the elements up till all the elements are deleted from the array. Now when you delete again an error would be thrown, catch the error and console log in the browser -> Array is empty now. You dont have to use for loop as there are only 3 posts. Just call delete post 3 times. */
+/* Additional Sharpener Task Two
+Try creating a post (post four) and once the post is created, call delete post after 1 second and delete post 4.
+How would you do it? Write the code. */
 let posts = [
     { title: 'Post One', body: 'This is Post One' },
     { title: 'Post Two', body: 'This is Post Two' }
@@ -49,21 +49,26 @@ createPost({ title: 'Post Three', body: 'This is Post Three' })
         getPost();
         deletePost()
             .then(() => {
-                getPost();
+                getPost()
                 deletePost()
                     .then(() => {
                         getPost();
                         deletePost()
                             .then(() => {
                                 getPost();
-                                deletePost()
-                                    .then(() => { })
-                                    .catch(error => console.log(error));
+                                createPost({ title: 'Post Four', body: 'This is Post Four' })
+                                    .then(() => {
+                                        getPost();
+                                        deletePost()
+                                            .then(getPost)
+                                            .catch(msg => console.log(msg));
+                                    })
+                                    .catch(err => console.log(err));
                             })
-                            .catch(error => console.log(error));
+                            .catch(msg => console.log(msg));
                     })
-                    .catch(error => console.log(error));
+                    .catch(msg => console.log(msg));
             })
-            .catch(error => console.log(error));
+            .catch(msg => console.log(msg));
     })
-    .catch(errMsg => console.log(errMsg));
+    .catch(err => console.log(err));
