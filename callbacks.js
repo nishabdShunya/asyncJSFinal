@@ -1,4 +1,5 @@
-/* Just as the YouTuber Does */
+/* Additional Sharpener Task One
+Make a new function call create4thPost for adding one more new post "Post Four". create4thPost should take createPost as a callback function. Once the post is created all the 4 posts should be displayed too. */
 let posts = [
     { title: 'Post One', body: 'This is Post One' },
     { title: 'Post Two', body: 'This is Post Two' }
@@ -22,3 +23,10 @@ function createPost(post, callback) {
 }
 
 createPost({ title: 'Post Three', body: 'This is Post Three' }, getPost);
+
+function create4thPost(callback) {
+    setTimeout(() => {
+        callback({ title: 'Post Four', body: 'This is Post Four' }, getPost);
+    }, 2000)
+}
+create4thPost(createPost);
