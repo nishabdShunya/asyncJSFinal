@@ -1,5 +1,5 @@
-/* Additional Sharpener Task One
-I want you to create one more promise called updateUserLastActivityTime. Every time the user creates a post, this promise should be parallely called (should execute in 1 second). When both the promises (createPost and updateLastUserActivityTime resolve), I want you to console log all the posts created and lastActivityTime of the user. */
+/* Additional Sharpener Task Two
+Once both the above promises are resolved, I want you to delete the last post by calling the deletion promise. Once successfully deleted, I want you to log the new set of Posts of the user. */
 let posts = [
     { title: 'Post One', body: 'This is Post One' },
     { title: 'Post Two', body: 'This is Post Two' }
@@ -35,6 +35,19 @@ function createPost(post) {
     });
 };
 
+function deletePost() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (posts.length != 0) {
+                resolve(posts.pop());
+            }
+            else {
+                reject('Array is Empty Now');
+            }
+        }, 1000);
+    });
+};
+
 console.log(`User last activity time before updating: ${user.lastActivityTime}`);
 
 function updateUserLastActivityTime() {
@@ -53,4 +66,13 @@ Promise.all([createPost({ title: 'Post Three', body: 'This is Post Three' }), up
             console.log(post);  // Logging posts onto the Console
         });
         console.log(`User last activity time after updating: ${timeUpdated}`);
-    });
+    })
+    .then(() => {
+        deletePost()
+            .then(() => {
+                getPost();  // Displaying posts on the DOM
+                posts.forEach((post) => {
+                    console.log(post);  // Logging posts onto the console
+                });
+            });
+    })
