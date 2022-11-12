@@ -1,15 +1,19 @@
-/* Additional Sharpener Task One
-Make a new function call create4thPost for adding one more new post "Post Four". create4thPost should take createPost as a callback function. Once the post is created all the 4 posts should be displayed too. */
+/* Additional Sharpener Task Two
+Lets also record when the post was created. So now onwards whenever. a new post is created  add a new key called createdAt in each post. CreatedAt should have the timestamp of  when the post was created. So now your post object would look like { title, body, createdAt}
+On the screen show the user how long back each of the post was created in seconds ago. Just add "{ current timestamp  - postcreated At timestamp }" on each of the post. It should look like the following:
+Post 1 created x seconds ago
+Post 2 created y seconds ago
+Post 3 created z seconds ago */
 let posts = [
-    { title: 'Post One', body: 'This is Post One' },
-    { title: 'Post Two', body: 'This is Post Two' }
+    { title: 'Post One', body: 'This is Post One', createdAt: Math.floor((new Date().getTime()) / 1000) },
+    { title: 'Post Two', body: 'This is Post Two', createdAt: Math.floor((new Date().getTime()) / 1000) }
 ];
 
 function getPost() {
-    let output = '';
     setTimeout(() => {
+        let output = '';
         posts.forEach((post) => {
-            output += `<li>${post.title}</li>`;
+            output += `<li>${post.title} | created ${Math.floor((new Date().getTime()) / 1000) - post.createdAt} seconds ago</li>`;
         })
         document.querySelector('main').innerHTML = output;
     }, 1000)
@@ -17,16 +21,17 @@ function getPost() {
 
 function createPost(post, callback) {
     setTimeout(() => {
-        posts.push(post);
+        posts.push({ ...post, createdAt: Math.floor((new Date().getTime()) / 1000) });
         callback();
     }, 2000);
 }
-
-createPost({ title: 'Post Three', body: 'This is Post Three' }, getPost);
 
 function create4thPost(callback) {
     setTimeout(() => {
         callback({ title: 'Post Four', body: 'This is Post Four' }, getPost);
     }, 2000)
 }
+
+getPost();
+createPost({ title: 'Post Three', body: 'This is Post Three' }, getPost);
 create4thPost(createPost);
